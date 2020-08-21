@@ -5,7 +5,7 @@ router.use('/user',userRouter)
 
 router.get('/' , (req,res) => {
     res.json({
-        "data" : "api sever running"
+        "data" : "In api server"
     });
 });
 
