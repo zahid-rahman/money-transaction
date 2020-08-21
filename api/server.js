@@ -8,7 +8,8 @@ const morgan = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const indexRouter = require('./router/index');
-
+const dotenv = require('dotenv');
+dotenv.config()
 /* 
     middleware setup
 */
@@ -32,9 +33,10 @@ app.use('/',indexRouter)
     starting start setup
 */
 let PORT = process.env.PORT || 4000
+let connectionString = process.env.DB_CLOUD_CONNECTION_STRING
 app.listen(PORT, () => {
     console.log(`server running on ${PORT}`)
-    mongoose.connect("mongodb://localhost/money-management-app", 
+    mongoose.connect(connectionString, 
     { 
         useNewUrlParser: true ,
         useUnifiedTopology: true 
