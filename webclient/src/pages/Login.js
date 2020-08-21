@@ -71,7 +71,7 @@ class Login extends Component {
             <div className="row">
                 { !this.state.isLogin ? 
                              <div className="col-sm-6 offset-md-3">
-                             <h1 className="text-center display-4">Registration</h1>
+                             <h1 className="text-center display-4">Login</h1>
                              <form method="post" onSubmit={this.submitHandler}>
                  
                                  <div className="form-group">
