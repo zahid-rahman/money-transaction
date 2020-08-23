@@ -18,3 +18,5 @@ const validate = (transaction) => {
     }
 
 }
+
+module.exports = validate
