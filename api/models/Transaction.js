@@ -10,8 +10,12 @@ let transactionSchema = new Schema({
         type:String,
         required:true
     },
-    note:String
-
+    note:String,
+    author:{
+        type:Schema.Types.ObjectId,
+        ref:'User'
+    }
+    
 },{timestamps:true});
 
 let transactionModel = mongoose.model('Transaction',transactionSchema)
