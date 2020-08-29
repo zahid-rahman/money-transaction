@@ -2,11 +2,19 @@ let router = require('express').Router();
 let Transaction = require('../models/Transaction')
 let User = require('../models/User')
 
+let authenticate = require('../middleware/authenticate');
+
 // list of all transaction
-router.get('/',(req,res) => {
+router.get('/',authenticate,(req,res) => {
     Transaction.find()
     .then(transactions => {
-        res.json(transactions)
+        if(transactions.length === 0){
+            res.json({
+                message : "No transaction found"
+            })
+        }else{
+            res.json(transactions)
+        }
     })
     .catch(error => console.log(error))
 })

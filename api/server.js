@@ -9,9 +9,10 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const indexRouter = require('./router/index');
 const dotenv = require('dotenv');
+const passport = require('passport');
 dotenv.config()
 /* 
-    middleware setup
+    all middleware setup
 */
 
 // cors setup
@@ -22,6 +23,9 @@ app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({extended:false}))
 app.use(bodyParser.json())
 
+// passport js setup
+app.use(passport.initialize())
+require('./passport')(passport)
 
 /* 
     home route setup
