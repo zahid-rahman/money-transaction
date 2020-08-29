@@ -6,7 +6,7 @@ let authenticate = require('../middleware/authenticate');
 const transactionController = require('../controllers/transactionController');
 
 // list of all transaction
-router.get('/list',transactionController.findTransactionList)
+router.get('/list',authenticate,transactionController.findTransactionList)
 
 // create a valid transaction
 router.post('/create', authenticate,transactionController.createTransaction )

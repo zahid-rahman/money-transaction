@@ -3,7 +3,8 @@ let User = require('../models/User')
 
 // transaction list 
 let findTransactionList = (req,res) => {
-    Transaction.find()
+    let { _id } = req.user
+    Transaction.find({author:_id})
     .then(transactions => {
         if(transactions.length === 0){
             res.json({
