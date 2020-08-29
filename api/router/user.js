@@ -4,6 +4,7 @@ let loginValidator = require('../validator/loginValidate');
 let User = require('../models/User');
 let bcrypt = require('bcrypt');
 let jwt = require('jsonwebtoken');
+let authenticate = require('../middleware/authenticate');
 
 
 router.post('/login', (req, res) => {
@@ -93,7 +94,11 @@ router.post('/register', (req, res) => {
                     let createUser = new User({
                         name: username,
                         email,
-                        password: hash
+                        password: hash,
+                        balance:0,
+                        income:0,
+                        expense:0,
+                        transactions:[]
                     });
 
                     //Save user to Database
@@ -113,6 +118,18 @@ router.post('/register', (req, res) => {
                 })
             })
     }
+})
+
+
+router.get('/list',authenticate,(req,res) => {
+    User.find()
+    .then(users => {
+        res.json(users)
+    })
+    .catch(error => {
+        console.log(error)
+        console.error(error)
+    })
 })
 
 module.exports = router;

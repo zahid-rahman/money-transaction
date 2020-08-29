@@ -20,9 +20,11 @@ router.get('/',authenticate,(req,res) => {
 })
 
 // create a valid transaction
-router.post('/create',(req,res) => {
+router.post('/create', authenticate, (req,res) => {
     let {amount,type,note} = req.body
     let userId = req.user._id
+
+    console.log(req.user)
 
     let transaction = new Transaction({
         amount, type, note, author : userId
@@ -30,7 +32,7 @@ router.post('/create',(req,res) => {
 
     transaction.save()
         .then(trans => {
-            let updateUser = {...req.user}
+            let updateUser = {...req.user._doc}
             if(type === "income"){
                 updateUser.balance = updateUser.balance + amount
                 updateUser.income = updateUser.income + amount
@@ -39,10 +41,10 @@ router.post('/create',(req,res) => {
                 updateUser.balance = updateUser.balance - amount
                 updateUser.expense = updateUser.expense + amount
             }
-
+            console.log(updateUser)
             updateUser.transactions.unshift(trans._id)
 
-            User.findByIdAndUpdate(updateUser._id,{$set:updateUser})
+            User.findByIdAndUpdate(updateUser._id,{$set:updateUser},{new:true})
                 .then(() => {
                     res.json({
                         message : 'Transaction created successfully'
