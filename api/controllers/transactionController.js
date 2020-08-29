@@ -35,8 +35,15 @@ let createTransaction = (req,res) => {
                 updateUser.income = updateUser.income + amount
             }
             else if(type === 'expense'){
-                updateUser.balance = updateUser.balance - amount
-                updateUser.expense = updateUser.expense + amount
+                if(updateUser.balance === 0){
+                    return res.json({
+                        message : "Insufficient balance"
+                    });
+                }else{
+                    updateUser.balance = updateUser.balance - amount
+                    updateUser.expense = updateUser.expense + amount
+                }
+    
             }
             console.log(updateUser)
             updateUser.transactions.unshift(trans._id)
