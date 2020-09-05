@@ -119,7 +119,7 @@ class Login extends Component {
                          </div>  
                 : 
                 
-                   <Dashboard store={store} data={this.state.email}></Dashboard>
+                this.props.history.push('/dashboard')
                 }
             </div>
         )
