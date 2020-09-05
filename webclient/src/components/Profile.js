@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
+import axios from 'axios'
 import jwtDecode from 'jwt-decode'
+let serverUrl = process.env.REACT_APP_SERVER_URL    
+
 
 export default class Profile extends Component {
     constructor(props){
         super()
         this.state = {
-            user:[],
+            userDetails:[]
         }
     }
 
@@ -15,13 +18,31 @@ export default class Profile extends Component {
         this.setState({
             user:decode
         })
+
+        const authHeader = {
+            headers:{
+                Authorization:authToken.token
+            }
+        }
+
+        axios.get(`${serverUrl}/user/${decode._id}`,authHeader)
+        .then(user => {
+            this.setState({
+                userDetails:user.data
+            })
+        })
+        .catch(error => {
+            console.log(error)
+            console.error(error)
+        })
     }
 
     
 
     render() {
-        console.log(this.state.user)
-        let userDetails = this.state.user
+        console.log(this.state.userDetails)
+
+        let userDetails = this.state.userDetails
         let profileDetails = <div>
            <div className="jumbotron">
                <h4 >User Details</h4>

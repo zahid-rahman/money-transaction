@@ -3,6 +3,7 @@ import Axios from 'axios'
 import jwtDecode from 'jwt-decode'
 import Transaction from '../components/Transaction'
 import Profile from '../components/Profile'
+import CreateTransaction from '../components/CreateTransaction'
 
 
 let serverUrl = process.env.REACT_APP_SERVER_URL
@@ -45,12 +46,14 @@ export default class Dashboard extends Component {
         
     }
 
-    getComponent = () => {
+    loadComponent = () => {
         switch (this.state.renderView) {
             case 'profile':
                 return <Profile></Profile>
             case 'transactions':
-                   return <Transaction></Transaction> 
+                return <Transaction></Transaction> 
+            case 'create-transaction':
+                return <CreateTransaction></CreateTransaction> 
             default:
                 return <Profile></Profile>
         }
@@ -74,6 +77,10 @@ export default class Dashboard extends Component {
                         <button onClick={this.renderHandler} className="btn btn-link nav-link" value={"transactions"}>transacitons</button>
                     </li>
 
+                    <li className="nav-item">
+                        <button onClick={this.renderHandler} className="btn btn-link nav-link" value={"create-transaction"}>create transaction</button>
+                    </li>
+
                     </ul>
                     <form className="form-inline my-2 my-lg-0">
                     <a href="/login" className="btn btn-danger" onClick={this.logoutHandler}>Logout</a>
@@ -93,7 +100,7 @@ export default class Dashboard extends Component {
         return (
             <div>
                 {navbar}
-                {this.getComponent()}
+                {this.loadComponent()}
             </div>
 
         )

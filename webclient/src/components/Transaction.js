@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
 import jwtDecode from 'jwt-decode'
-let serverUrl = process.env.REACT_APP_SERVER_URL
+let serverUrl = process.env.REACT_APP_SERVER_URL    
 
 export default class Transaction extends Component {
     constructor(props){

@@ -12,5 +12,8 @@ router.post('/register', userController.userRegistration)
 // user list route
 router.get('/list',userController.userList)
 
+//identifying single user
+router.get('/:userId',authenticate,userController.findSingleUser)
+
 module.exports = router;
 
