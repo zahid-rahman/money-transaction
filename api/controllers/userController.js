@@ -44,7 +44,7 @@ let userLogin = (req, res) => {
                 // generating jwt
                 let token = jwt.sign({
                     _id: user._id,
-                    username: user.username,
+                    name: user.name,
                     email: user.email
                 }, 'SECRET', { expiresIn: '2h' });
 
