@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import Dashboard from '../components/Dashboard'
+import Dashboard from './Dashboard'
 import jwtDecode from 'jwt-decode'
 import axios from 'axios'
 let serverUrl = process.env.REACT_APP_SERVER_URL
@@ -39,6 +39,7 @@ class Login extends Component {
     submitHandler = event => {
         event.preventDefault()
         let data = this.state;
+        
         axios.post(`${serverUrl}/user/login`,data)
         .then(response => {
             console.log(response.data)
@@ -118,7 +119,7 @@ class Login extends Component {
                          </div>  
                 : 
                 
-                   <Dashboard store={store} data={this.state.email}></Dashboard>
+                this.props.history.push('/dashboard')
                 }
             </div>
         )

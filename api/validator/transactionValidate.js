@@ -14,7 +14,7 @@ const validate = (transaction) => {
 
     return {
         error,
-        isValid: Object.keys(error).length === 0 
+        isValidate: Object.keys(error).length === 0 
     }
 
 }

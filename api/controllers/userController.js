@@ -44,7 +44,7 @@ let userLogin = (req, res) => {
                 // generating jwt
                 let token = jwt.sign({
                     _id: user._id,
-                    username: user.username,
+                    name: user.name,
                     email: user.email
                 }, 'SECRET', { expiresIn: '2h' });
 
@@ -132,8 +132,31 @@ let userList = (req,res) => {
     })
 }
 
+let findSingleUser = (req,res) => {
+
+    let { userId } = req.params 
+    console.log('param id',userId)
+    console.log('user id',req.user._id)
+
+    if(req.user._id == userId){
+        User.findById({_id:userId})
+        .then(user => {
+            res.json(user)
+        })
+        .catch(error => {
+            console.log(error)
+            console.error(error)
+        })
+    }else{
+        res.json({
+            message : "unauthorized user"
+        })
+    }
+}
+
 module.exports = {
     userLogin,
     userRegistration,
-    userList
+    userList,
+    findSingleUser
 }
