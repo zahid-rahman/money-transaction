@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import Dashboard from './Dashboard'
 import jwtDecode from 'jwt-decode'
 import axios from 'axios'
-import AuthComponent from '../auth/AuthComponent'
 let serverUrl = process.env.REACT_APP_SERVER_URL
 
 class Login extends Component {
@@ -67,7 +65,7 @@ class Login extends Component {
 
     render() {
 
-        let { email, password, error, store , isLogin } = this.state
+        let { email, password, error } = this.state
 
         return (
             <div className="row">

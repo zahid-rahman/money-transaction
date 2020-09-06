@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
-import jwtDecode from 'jwt-decode'
 let serverUrl = process.env.REACT_APP_SERVER_URL    
 
 export default class Transaction extends Component {
@@ -12,7 +11,6 @@ export default class Transaction extends Component {
     }
     componentDidMount() {
         let authToken = JSON.parse(localStorage.getItem('login-token'))
-        let decode = jwtDecode(authToken.token)
 
         const authHeader = {
             headers:{

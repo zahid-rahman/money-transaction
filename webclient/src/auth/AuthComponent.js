@@ -4,7 +4,6 @@ import jwtDecode from 'jwt-decode'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import Dashboard from '../pages/Dashboard'
-import NotAuthorize from './NotAuthorize';
 
 let serverUrl = process.env.REACT_APP_SERVER_URL    
 
@@ -25,7 +24,6 @@ class AuthComponent extends Component {
         let authToken = JSON.parse(localStorage.getItem('login-token'))
         if(!authToken){
             window.location.href="/notAuthorize"
-            // return <NotAuthorize></NotAuthorize>
         }    
         else{
             let decode = jwtDecode(authToken.token)

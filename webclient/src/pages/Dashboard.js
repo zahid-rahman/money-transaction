@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
-import jwtDecode from 'jwt-decode'
 import Transaction from '../components/Transaction'
 import Profile from '../components/Profile'
 import CreateTransaction from '../components/CreateTransaction'
@@ -18,7 +17,6 @@ export default class Dashboard extends Component {
 
     componentDidMount() {
         let authToken = JSON.parse(localStorage.getItem('login-token'))
-        let decode = jwtDecode(authToken.token)
 
         const authHeader = {
             headers:{
