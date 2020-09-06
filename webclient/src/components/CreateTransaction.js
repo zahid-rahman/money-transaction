@@ -29,8 +29,6 @@ export default class CreateTransaction extends Component {
             userId:decode._id,
             authHeader
         });
-
-
     }
 
     transactionSubmitHandler = event => {
@@ -60,7 +58,7 @@ export default class CreateTransaction extends Component {
 
     render() {
 
-        let { amount,note,type,userId,error } = this.state
+        let { amount,note,type,error } = this.state
 
         return (
             <div className="row">
