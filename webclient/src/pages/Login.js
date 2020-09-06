@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import Dashboard from './Dashboard'
 import jwtDecode from 'jwt-decode'
 import axios from 'axios'
+import AuthComponent from '../auth/AuthComponent'
 let serverUrl = process.env.REACT_APP_SERVER_URL
 
 class Login extends Component {
@@ -118,8 +119,10 @@ class Login extends Component {
                              </form>
                          </div>  
                 : 
-                
-                this.props.history.push('/dashboard')
+            
+                    this.props.history.push('/dashboard')
+                    // <AuthComponent></AuthComponent>
+         
                 }
             </div>
         )
