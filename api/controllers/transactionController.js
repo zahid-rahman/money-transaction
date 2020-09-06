@@ -1,6 +1,6 @@
 let Transaction = require('../models/Transaction')
 let User = require('../models/User')
-
+let transactionValidation = require('../validator/transactionValidate');
 // transaction list 
 let findTransactionList = (req,res) => {
     let { _id } = req.user
@@ -22,18 +22,23 @@ let createTransaction = (req,res) => {
     let {amount,type,note} = req.body
     let userId = req.user._id
 
-    console.log(req.user)
-
-    let transaction = new Transaction({
-        amount, type, note, author : userId
+    let validation = transactionValidation({
+        amount,type,note
     })
 
-    transaction.save()
+    if (!validation.isValidate) {
+        return res.status(400).json(validation.error);
+    }else{
+        let transaction = new Transaction({
+            amount, type, note, author : userId
+        })
+
+        transaction.save()
         .then(trans => {
             let updateUser = {...req.user._doc}
             if(type === "income"){
-                updateUser.balance = updateUser.balance + amount
-                updateUser.income = updateUser.income + amount
+                updateUser.balance = updateUser.balance + Number(amount)
+                updateUser.income = updateUser.income + Number(amount)
             }
             else if(type === 'expense'){
                 if(updateUser.balance === 0){
@@ -41,8 +46,8 @@ let createTransaction = (req,res) => {
                         message : "Insufficient balance"
                     });
                 }else{
-                    updateUser.balance = updateUser.balance - amount
-                    updateUser.expense = updateUser.expense + amount
+                    updateUser.balance = updateUser.balance - Number(amount)
+                    updateUser.expense = updateUser.expense + Number(amount)
                 }
     
             }
@@ -58,6 +63,8 @@ let createTransaction = (req,res) => {
 
         })
         .catch(error => console.log(error))
+    }
+
 }
 
 // single transaction 

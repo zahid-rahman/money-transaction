@@ -12,9 +12,7 @@ export default class Transaction extends Component {
     }
     componentDidMount() {
         let authToken = JSON.parse(localStorage.getItem('login-token'))
-        console.log(authToken.token)
         let decode = jwtDecode(authToken.token)
-        console.log(decode)
 
         const authHeader = {
             headers:{
@@ -30,7 +28,6 @@ export default class Transaction extends Component {
         })
         .catch(error => {
             console.log(error)
-            console.error(error)
         })
     }
 
@@ -41,15 +38,20 @@ export default class Transaction extends Component {
         let listOfTransactions;
 
         if(this.state.transactions.message){
-             listOfTransactions= <div><h1>No transaction found</h1></div>
+             listOfTransactions= <div><h1 style={{color:'#d0021b',textAlign:'center'}}>No transaction found</h1></div>
         }
         else{
              listOfTransactions = <div>
             <ul className="list-group">
             {this.state.transactions.map((transactions,index) => 
-                <div>
+                <div  key={index}>
                 <li className="list-group-item"> 
-                    <h3>#{index+1}</h3>
+                    <h3>#{index+1} {transactions.amount > 100000 ? 
+                        <span>
+                            <span className="fa fa-star checked" style={{color:"orange"}}></span> - <span style={{'font-size':'25px','font-weight':'400'}}>topnotch transaction</span>
+                        </span>
+                    : ''}</h3> 
+                    
                     <span className="badge badge-dark">Amount : {transactions.amount} BDT</span>
                     <br></br>
                 
@@ -68,16 +70,10 @@ export default class Transaction extends Component {
         </div>
         }
 
-
-     
-
         return (
             <div>
-                { this.state.transactions ? listOfTransactions : 
-                 <div>
-                     <h1>No transaction found</h1>
-                 </div>
-                }
+                <br></br>
+                {listOfTransactions}
             </div>
         )
     }
