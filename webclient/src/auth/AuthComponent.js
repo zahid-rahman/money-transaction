@@ -4,6 +4,7 @@ import jwtDecode from 'jwt-decode'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import Dashboard from '../pages/Dashboard'
+import cookie from 'js-cookie'
 
 let serverUrl = process.env.REACT_APP_SERVER_URL    
 
@@ -21,12 +22,15 @@ class AuthComponent extends Component {
     }
 
     getUser = () => {
-        let authToken = JSON.parse(localStorage.getItem('login-token'))
+        // alert(cookie.get('jk123lkd'));
+
+        let authToken = cookie.get('jk123lkd')
         if(!authToken){
             window.location.href="/notAuthorize"
         }    
         else{
-            let decode = jwtDecode(authToken.token)
+            let parseAuthToken = JSON.parse(authToken)
+            let decode = jwtDecode(parseAuthToken.token)
             const authHeader = {
                 headers:{
                     Authorization:authToken.token

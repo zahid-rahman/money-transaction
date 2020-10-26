@@ -3,7 +3,7 @@ import Axios from 'axios'
 import Transaction from '../components/Transaction'
 import Profile from '../components/Profile'
 import CreateTransaction from '../components/CreateTransaction'
-
+import cookie from 'js-cookie'
 
 let serverUrl = process.env.REACT_APP_SERVER_URL
 
@@ -16,7 +16,7 @@ export default class Dashboard extends Component {
     }
 
     componentDidMount() {
-        let authToken = JSON.parse(localStorage.getItem('login-token'))
+        let authToken = cookie.get('jk123lkd')
 
         const authHeader = {
             headers:{
@@ -90,11 +90,14 @@ export default class Dashboard extends Component {
 
 
         this.logoutHandler = () => {
-            localStorage.removeItem('login-token')
+
+            // cookie.remove('jk123lkd')
+            Object.keys(cookie.get()).map(cookies => {
+                console.log(cookies)
+                cookie.remove(cookies)
+            })
         }
 
-
-   
         return (
             <div>
                 {navbar}

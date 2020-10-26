@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Axios from 'axios'
+import cookie from 'js-cookie'
 let serverUrl = process.env.REACT_APP_SERVER_URL    
 
 export default class Transaction extends Component {
@@ -10,7 +11,7 @@ export default class Transaction extends Component {
         }
     }
     componentDidMount() {
-        let authToken = JSON.parse(localStorage.getItem('login-token'))
+        let authToken = JSON.parse(cookie.get('jk123lkd'))
 
         const authHeader = {
             headers:{

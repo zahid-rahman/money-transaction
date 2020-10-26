@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
+import cookie from 'js-cookie'
 let serverUrl = process.env.REACT_APP_SERVER_URL    
 
 
@@ -13,7 +14,7 @@ export default class Profile extends Component {
     }
 
     componentDidMount() {
-        let authToken = JSON.parse(localStorage.getItem('login-token'))
+        let authToken = JSON.parse(cookie.get('jk123lkd'))
         let decode = jwtDecode(authToken.token)
         this.setState({
             user:decode
@@ -37,8 +38,6 @@ export default class Profile extends Component {
         })
     }
 
-    
-
     render() {
         console.log(this.state.userDetails)
 
@@ -57,14 +56,8 @@ export default class Profile extends Component {
     <p>Total balance : {userDetails.balance > 5000 ? <span className="badge badge-success">{userDetails.balance} BDT</span> : <span className="badge badge-danger">{userDetails.balance} BDT</span>} </p>
                <p>Total income : <span className="badge badge-info">{userDetails.income} BDT</span> </p>
                <p>Total expense : <span className="badge badge-danger">{userDetails.expense} BDT</span></p>
-
                </div>
-
            </div>
-
-
-
-
         return (
             <div>
                 {profileDetails}

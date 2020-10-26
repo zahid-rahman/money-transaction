@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import jwtDecode from 'jwt-decode'
 import axios from 'axios'
+import cookie from 'js-cookie'
+import crypto from 'crypto'
 let serverUrl = process.env.REACT_APP_SERVER_URL
 
 class Login extends Component {
@@ -21,10 +23,14 @@ class Login extends Component {
         this.storeCollector()
     }
 
+
+
     storeCollector = () => {
-        let store = JSON.parse(localStorage.getItem('login-token'))
-        if(store && store.login){
-            this.setState({isLogin:true,store:store})
+  
+        const user = cookie.get('jk123lkd')
+        console.log(user)
+        if(user){
+            this.setState({isLogin:true,store:user})
         }
     }
     
@@ -42,10 +48,25 @@ class Login extends Component {
         axios.post(`${serverUrl}/user/login`,data)
         .then(response => {
             console.log(response.data)
-            localStorage.setItem('login-token',JSON.stringify({
+            let tokenData = JSON.stringify({
                 login:true,
                 token:response.data.token
-            }))
+            });
+            //fake cookies
+            let fakeName = "";
+            let fakeData = "";
+            let fakeCookieData ="";
+
+            for(let i=0;i<10;i++){
+                fakeName = Math.random().toString(36).substring(7);
+                fakeData = `{%login%true%token${crypto.randomBytes(18).toString('hex')}}`;
+              fakeCookieData = `{%22login%22:true%2C%22token%22:%22Bearer%20${fakeData}.eyJfaWQiOiI1ZjUyZGU5YjA2ODAxZDE1Y2VlOGNhYWMiLCJuYW1lIjoiemFoaWQiLCJlbWFpbCI6InphaGlkQGdtYWlsLmNvbSIsImlhdCI6MTYwMzc0NTM4OSwiZXhwIjoxNjAzNzUyNTg5fQ.zjR2-rr${fakeData}%22}`
+                cookie.set(fakeName,fakeCookieData,{expires:2})
+            }
+            //setting cookies
+            cookie.set('jk123lkd',tokenData,{expires:2})
+          
+
             let decode = jwtDecode(response.data.token)
             console.log(decode)
             this.setState({
@@ -57,7 +78,7 @@ class Login extends Component {
         })
         .catch(error => {
             this.setState({
-                error: error.response.data
+                error: error
             })
 
         })
@@ -120,7 +141,6 @@ class Login extends Component {
             
                     this.props.history.push('/dashboard')
                     // <AuthComponent></AuthComponent>
-         
                 }
             </div>
         )

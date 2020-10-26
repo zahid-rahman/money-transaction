@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
+import cookie from 'js-cookie'
+
 let serverUrl = process.env.REACT_APP_SERVER_URL   
 
 export default class CreateTransaction extends Component {
@@ -16,7 +18,7 @@ export default class CreateTransaction extends Component {
         }
     }
     componentDidMount() {
-        let authToken = JSON.parse(localStorage.getItem('login-token'))
+        let authToken = JSON.parse(cookie.get('jk123lkd'))
         let decode = jwtDecode(authToken.token)
 
         const authHeader = {
