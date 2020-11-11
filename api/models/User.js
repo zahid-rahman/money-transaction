@@ -14,9 +14,18 @@ let UserSchema = new Schema({
         type: String,
         required: true
     },
-    balance: Number,
-    income: Number,
-    expense: Number,
+    balance:{
+        type:Number,
+        default:0
+    },
+    income: {
+        type:Number,
+        default:0
+    },
+    expense: {
+        type:Number,
+        default:0
+    },
     transactions: {
         type: [{
             type: Schema.Types.ObjectId,
